@@ -3,6 +3,25 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --om-bg: #f6f3ee;
+  --om-fg: #1c1917;
+  --om-muted: #78716c;
+  --om-line: #d6d3d1;
+  --om-surface: #fafaf9;
+  --om-surface-active: #fffefb;
+  --om-a: #0d9488;
+  --om-b: #ea580c;
+  --om-glow: rgba(13, 148, 136, 0.18);
+  /* 各阶段扇形填充（与阶段索引取模对应） */
+  --om-sector-0: rgba(13, 148, 136, 0.42);
+  --om-sector-1: rgba(234, 88, 12, 0.42);
+  --om-sector-2: rgba(124, 58, 237, 0.38);
+  --om-sector-3: rgba(217, 119, 6, 0.42);
+  --om-sector-4: rgba(219, 39, 119, 0.38);
+  --om-sector-5: rgba(2, 132, 199, 0.4);
+  --om-sector-6: rgba(22, 163, 74, 0.4);
+  --om-sector-7: rgba(79, 70, 229, 0.38);
+  --om-disk-plate: color-mix(in oklab, var(--om-surface) 72%, transparent);
 }
 
 @theme inline {
@@ -16,11 +35,29 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --om-bg: #0c0a09;
+    --om-fg: #fafaf9;
+    --om-muted: #a8a29e;
+    --om-line: #44403c;
+    --om-surface: #1c1917;
+    --om-surface-active: #292524;
+    --om-a: #2dd4bf;
+    --om-b: #fb923c;
+    --om-glow: rgba(45, 212, 191, 0.12);
+    --om-sector-0: rgba(45, 212, 191, 0.38);
+    --om-sector-1: rgba(251, 146, 60, 0.4);
+    --om-sector-2: rgba(167, 139, 250, 0.36);
+    --om-sector-3: rgba(251, 191, 36, 0.38);
+    --om-sector-4: rgba(244, 114, 182, 0.36);
+    --om-sector-5: rgba(56, 189, 248, 0.38);
+    --om-sector-6: rgba(74, 222, 128, 0.36);
+    --om-sector-7: rgba(129, 140, 248, 0.38);
+    --om-disk-plate: color-mix(in oklab, var(--om-surface) 55%, transparent);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--om-bg);
+  color: var(--om-fg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
