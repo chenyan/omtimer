@@ -220,7 +220,7 @@ export function useOmTimer() {
 
   const addPreset = useCallback(() => {
     const id = uid();
-    setPresets((list) => [...list, { id, name: "新预设", stagesSec: [60] }]);
+    setPresets((list) => [...list, { id, name: "新预设", desc: "", stagesSec: [60] }]);
     setActivePresetId(id);
   }, []);
 

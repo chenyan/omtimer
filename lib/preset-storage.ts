@@ -8,9 +8,10 @@ function uid(): string {
 
 export function defaultPresets(): TimerPreset[] {
   return [
-    { id: "preset-478", name: "呼吸 4·7·8", stagesSec: [4, 7, 8] },
-    { id: "preset-pomodoro", name: "番茄工作", stagesSec: [25 * 60, 5 * 60] },
-    { id: "preset-3s", name: "短时三段", stagesSec: [30, 60, 90] },
+    { id: "preset-478", name: "呼吸 4·7·8", desc: "放松呼吸练习, 吸气4秒,呼气7秒,吸气8秒", stagesSec: [4, 7, 8] },
+    { id: "preset-pomodoro", name: "番茄工作", desc: "专注与休息循环", stagesSec: [25 * 60, 5 * 60] },
+    { id: "preset-3s", name: "短时三段", desc: "快速热身计时", stagesSec: [30, 60, 90] },
+    { id: "preset-55", name: "呼吸 5·5", desc: "放松呼吸练习,放松交感神经,鼻子吸气5秒, 嘴巴呼气5秒", stagesSec: [5, 5] },
   ];
 }
 
@@ -56,6 +57,9 @@ export function loadPresets(): TimerPreset[] {
           out.push({
             id: (item as TimerPreset).id,
             name: String((item as TimerPreset).name).slice(0, 64),
+            desc: typeof (item as { desc?: unknown }).desc === "string"
+              ? (item as { desc: string }).desc.slice(0, 128)
+              : "",
             stagesSec: stages,
           });
         }

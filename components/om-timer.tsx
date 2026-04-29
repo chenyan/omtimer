@@ -29,6 +29,7 @@ export function OmTimer() {
 
   const p = t.activePreset;
   const [nameDraft, setNameDraft] = useState(p?.name ?? "");
+  const [descDraft, setDescDraft] = useState(p?.desc ?? "");
   const [stagesDraft, setStagesDraft] = useState(() => p?.stagesSec.join(" / ") ?? "");
   const [beepVolume01, setBeepVolume01] = useState(1);
 
@@ -45,9 +46,10 @@ export function OmTimer() {
   useEffect(() => {
     if (p) {
       setNameDraft(p.name);
+      setDescDraft(p.desc);
       setStagesDraft(p.stagesSec.join(" / "));
     }
-  }, [p?.id, p?.name, stagesKey]);
+  }, [p?.id, p?.name, p?.desc, stagesKey]);
 
   const onCommitStages = () => {
     if (!p || t.status === "running" || t.status === "paused") return;
@@ -62,6 +64,11 @@ export function OmTimer() {
   const onCommitName = () => {
     if (!p) return;
     t.updateActivePreset((cur) => ({ ...cur, name: nameDraft.trim() || cur.name }));
+  };
+
+  const onCommitDesc = () => {
+    if (!p) return;
+    t.updateActivePreset((cur) => ({ ...cur, desc: descDraft.trim().slice(0, 128) }));
   };
 
   const diskR = 46;
@@ -117,6 +124,9 @@ export function OmTimer() {
                 ＋ 新预设
               </button>
             </div>
+            <p className="mt-2 text-sm text-[var(--om-muted)]">
+              {p?.desc?.trim() ? p.desc : "当前预设暂无用途描述"}
+            </p>
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2 sm:justify-end">
             {t.presets.length > 1 && (
@@ -334,6 +344,22 @@ export function OmTimer() {
                   className="w-full rounded-xl border border-[var(--om-line)] bg-[var(--om-bg)] px-3 py-2 text-sm outline-none ring-0 transition focus:border-[var(--om-a)] disabled:opacity-50"
                 />
               </div>
+              <div className="sm:w-1/2">
+                <label className="mb-1 block text-sm text-[var(--om-fg)]">用途描述</label>
+                <input
+                  value={descDraft}
+                  onChange={(e) => setDescDraft(e.target.value)}
+                  onBlur={onCommitDesc}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+                  }}
+                  disabled={t.status === "running" || t.status === "paused"}
+                  placeholder="例如 睡前放松 / 工作专注"
+                  className="w-full rounded-xl border border-[var(--om-line)] bg-[var(--om-bg)] px-3 py-2 text-sm outline-none transition focus:border-[var(--om-a)] disabled:opacity-50"
+                />
+              </div>
+            </div>
+            <div className="mt-4">
               <div className="sm:w-1/2">
                 <label className="mb-1 block text-sm text-[var(--om-fg)]">各段秒数</label>
                 <input
